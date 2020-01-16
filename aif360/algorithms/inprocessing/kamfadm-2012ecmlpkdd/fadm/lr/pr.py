@@ -299,7 +299,7 @@ class LRwPRObjetiveType4Mixin(LRwPR):
     value of S. Penalty for enhancing is defined as mutual information between
     Y and S.
     """
-    weights = pd.read_csv('weights.csv')
+    weights = pd.read_csv('weights.csv').iloc[:,1]
     def loss(self, coef_, X, y, s):
         """ loss function: negative log - likelihood with l2 regularizer
         To suppress the warnings at np.log, do "np.seterr(all='ignore')"
