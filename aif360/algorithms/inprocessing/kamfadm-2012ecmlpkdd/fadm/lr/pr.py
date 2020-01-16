@@ -342,7 +342,7 @@ class LRwPRObjetiveType4Mixin(LRwPR):
 
         # likelihood
         # \sum_{x,s,y in D} y log(sigma) + (1 - y) log(1 - sigma)
-        weights = weights.iloc[:len(y)+1,1]
+        weights = list(weights.iloc[:len(y)+1,1])
         l = np.sum(weights*(y * np.log(p) + (1.0 - y) * np.log(1.0 - p)))
 
         # fairness-aware regularizer
