@@ -33,7 +33,7 @@ import numpy as np
 from scipy.optimize import fmin_cg
 from sklearn.linear_model import LogisticRegression
 from sklearn.base import BaseEstimator, ClassifierMixin
-
+import pandas as pd
 #==============================================================================
 # Public symbols
 #==============================================================================
@@ -299,7 +299,7 @@ class LRwPRObjetiveType4Mixin(LRwPR):
     value of S. Penalty for enhancing is defined as mutual information between
     Y and S.
     """
-
+    weights = pd.read_csv('weights.csv')
     def loss(self, coef_, X, y, s):
         """ loss function: negative log - likelihood with l2 regularizer
         To suppress the warnings at np.log, do "np.seterr(all='ignore')"
@@ -320,7 +320,7 @@ class LRwPRObjetiveType4Mixin(LRwPR):
         loss : float
             loss function value
         """
-
+        
         coef = coef_.reshape(self.n_sfv_, self.n_features_)
 
 #        print >> sys.stderr, "loss:", coef[0, :], coef[1, :]
@@ -342,7 +342,7 @@ class LRwPRObjetiveType4Mixin(LRwPR):
 
         # likelihood
         # \sum_{x,s,y in D} y log(sigma) + (1 - y) log(1 - sigma)
-        l = np.sum(y * np.log(p) + (1.0 - y) * np.log(1.0 - p))
+        l = np.sum(weights*(y * np.log(p) + (1.0 - y) * np.log(1.0 - p)))
 
         # fairness-aware regularizer
         # \sum_{x,s in D} \
